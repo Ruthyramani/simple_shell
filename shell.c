@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include "main.h"
 
 
 char **split(char *, const char *);
@@ -22,19 +23,34 @@ int main(int ac, char **av, char **env)
 	pid_t pid;
 	size_t size = 0;
 	char *prompt = NULL;
+	char stringerr[255];
+	int status = EXIT_SUCCESS;
 
 	if (ac != 1)
 	{
-		fprintf(stdout, "Usage: %s\n", av[0]);
+		_puts(_strcat(_strcat(stringerr, "Usage: "), av[0]));
 		return (EXIT_FAILURE);
 	}
 	while (1)
 	{
-		printf("($) ");
+		_puts("($) ");
 		if (getline(&prompt, &size, stdin) == -1)
 		{
-			fprintf(stderr, "%s: Error while trying to get input\n", av[0]);
-			return (EXIT_FAILURE);
+			_putchar('\n');
+			break;
+		}
+		arglist = split(prompt, " \n");
+		if (_strcmp(arglist[0], "exit") == 0)
+		{
+			if [arglist[1])
+				status = 1;
+			break;
+		}
+
+		if (_strcmp(prompt, "env") == 0)
+		{
+			printenv();
+			continue;
 		}
 
 		pid = fork();
@@ -46,7 +62,6 @@ int main(int ac, char **av, char **env)
 		}
 		else if (pid == 0)
 		{
-			arglist = split(prompt, " \n");
 			if (execve(arglist[0], arglist, env) == -1)
 			{
 				perror("Error");
@@ -59,5 +74,8 @@ int main(int ac, char **av, char **env)
 		}
 
 	}
-	return (EXIT_SUCCESS);
+
+	free(prompt);
+
+	return (status);
 }
