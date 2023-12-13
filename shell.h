@@ -30,6 +30,6 @@ int handle_env(char **);
 int handle_exit(char **, int *);
 void free_list(dir_t *);
 dir_t *create_nodes(dir_t *, char **);
-ssize_t _getline(char **, size_t *, FILE *);
+ssize_t _getline(char **, size_t *, int);
 
 #endif /* MAIN_H */

@@ -41,7 +41,7 @@ int main(int ac, char **av, char **env)
 	{
 		if (isatty(STDIN_FILENO))
 			_puts("($) ");
-		if (_getline(&prompt, &size, stdin) == -1)
+		if (_getline(&prompt, &size, STDIN_FILENO) == -1)
 		{
 			_putchar('\n');
 			break;

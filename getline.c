@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "shell.h"
 
 /**
  * readin - reads input from the terminal
@@ -9,14 +10,13 @@
  *
  * Return: number of characters read
 */
-ssize_t readin(char *line, FILE *stream)
+ssize_t readin(char *line, int stream)
 {
 	ssize_t m = 0;
 	char c;
 
 	do {
-		c = getc(stream);
-		if (c != EOF)
+		if(read(stream, &c, 1))
 		{
 			line[m++] = c;
 		}
@@ -43,7 +43,7 @@ ssize_t readin(char *line, FILE *stream)
  * Return: The number of characters read from the stream, returns -1 if
  * error occur
  */
-ssize_t _getline(char **lineptr, __attribute__((unused)) size_t *n, FILE *strm)
+ssize_t _getline(char **lineptr, __attribute__((unused)) size_t *n, int strm)
 {
 	char *line = *lineptr;
 
