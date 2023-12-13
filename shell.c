@@ -39,7 +39,7 @@ int main(int ac, char **av, char **env)
 	while (1)
 	{
 		_puts("($) ");
-		if (getline(&prompt, &size, stdin) == -1)
+		if (_getline(&prompt, &size, stdin) == -1)
 		{
 			_putchar('\n');
 			break;

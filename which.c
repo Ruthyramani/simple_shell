@@ -88,6 +88,7 @@ dir_t *create_pathdirlist(const char *path)
 			_puts("malloc: an error has occurred\n");
 			exit(2);
 		}
+		
 		tmp-> name = list[i];
 		tmp->next = NULL;
 		current->next = tmp;

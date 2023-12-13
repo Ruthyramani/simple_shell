@@ -3,6 +3,7 @@
 
 #include <stdlib.h>
 #include <unistd.h>
+#include <stdio.h>
 
 typedef struct dir
 {
@@ -27,5 +28,6 @@ char *_getenv(char *);
 int handle_env(char **);
 int handle_exit(char **, int *);
 void free_list(dir_t *);
+ssize_t _getline(char **, size_t *, FILE *);
 
 #endif /* MAIN_H */
