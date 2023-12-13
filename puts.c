@@ -1,4 +1,4 @@
-#include "main.h"
+#include "shell.h"
 
 /**
  * _puts - prints a string of characters to stdout
@@ -8,7 +8,7 @@
  */
 int _puts(char *s)
 {
-        int index = 0;
+	int index = 0;
 
 	if (s == NULL)
 	{
@@ -22,4 +22,4 @@ int _puts(char *s)
 	}
 
 	return (index);
-}	
+}

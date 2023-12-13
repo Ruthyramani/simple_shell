@@ -3,6 +3,37 @@
 
 
 /**
+ * readin - reads input from the terminal
+ * @buf: buffer were input is copied
+ * @stream: input stream to get input
+ *
+ * Return: number of characters read
+*/
+ssize_t readin(char *line, FILE *stream)
+{
+	ssize_t m = 0;
+	char c;
+
+	do {
+		c = getc(stream);
+		if (c != EOF)
+		{
+			line[m++] = c;
+		}
+		else
+		{
+			m = -1;
+			break;
+		}
+	} while (c != '\n');
+
+	if (m > -1)
+		line[m] = '\0';
+
+	return (m);
+}
+
+/**
  * _getline - reads line input from user and stores in a null-terminated
  * memory buffer
  * @n: size of the memory buffer
@@ -12,30 +43,20 @@
  * Return: The number of characters read from the stream, returns -1 if
  * error occur
  */
-ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
+ssize_t _getline(char **lineptr, __attribute__((unused)) size_t *n, FILE *strm)
 {
 	char *line = *lineptr;
-	char c = 0;
-	ssize_t m = 0;
 
-	(void) n;
-
-	if ((lineptr == NULL) | (line == NULL))
-		return (-1);
-	do {
-		c = getc(stream);
-		if (c != EOF)
+	if (line == NULL)
+	{
+		line = malloc(sizeof(*line) * 4092);
+		if (!line)
 		{
-			line[m++] = c;
+			return (-1);
 		}
-		else
-		{
-			break;
-		}
-	} while (c != '\n');
+		return (readin(line, strm));
+	}
 
-	line[m] = '\0';
-
-	return (m);
+	return (readin(line, strm));
 }
 

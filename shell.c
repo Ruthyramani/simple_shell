@@ -1,10 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <sys/types.h>
 #include <sys/wait.h>
 #include "main.h"
-
+#include "shell.h"
 
 char **split(char *, const char *);
 
@@ -23,10 +22,10 @@ int main(int ac, char **av, char **env)
 	int wstatus;
 	char **arglist = NULL;
 	pid_t pid;
-	size_t size = 0;
+	size_t size = 4092;
 	char *prompt = NULL;
 	char stringerr[255];
-	const char *PATH = _getenv("PATH");
+	__attribute__((unused)) const char *PATH = _getenv("PATH");
 	int status = EXIT_SUCCESS;
 
 	if (ac != 1)
@@ -35,29 +34,35 @@ int main(int ac, char **av, char **env)
 		_putchar('\n');
 		return (EXIT_FAILURE);
 	}
+	prompt = malloc(sizeof(*prompt) * 4092);
 
 	while (1)
 	{
-		_puts("($) ");
+		if (isatty(STDIN_FILENO))
+			_puts("($) ");
 		if (_getline(&prompt, &size, stdin) == -1)
 		{
 			_putchar('\n');
 			break;
 		}
-
+		if (*prompt == '\n')
+			continue;
+		printf("After getline\n");
 		arglist = split(prompt, " \n");
+		printf("After split\n");
 		if (handle_exit(arglist, &status))
 			break;
 
 		if (handle_env(arglist))
 			continue;
 
-		file_path = file_exist(arglist[0], curr = create_pathdirlist(PATH));
+
+		/*file_path = file_exist(arglist[0], curr = create_pathdirlist(PATH));
 		if (!file_path)
 		{
 			perror("fify:");
 			continue;
-		}
+		}*/
 
 		pid = fork();
 
@@ -68,7 +73,7 @@ int main(int ac, char **av, char **env)
 		}
 		else if (pid == 0)
 		{
-			if (execve(file_path, arglist, env) == -1)
+			if (execve(arglist[0], arglist, env) == -1)
 			{
 				perror(av[0]);
 				return (EXIT_FAILURE);
@@ -83,7 +88,7 @@ int main(int ac, char **av, char **env)
 
 	}
 
-	free(prompt);
+	/*free(prompt);*/
 	/*free(arglist);*/
 	return (status);
 }

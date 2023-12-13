@@ -1,7 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
-
+#include "shell.h"
 
 /**
  * split - Uses characters in the delimiter provided to split a given string
@@ -25,7 +23,7 @@ char **split(char *line, const char *delim)
 	list = malloc(sizeof(*list) * 200);
 	if (list == NULL)
 	{
-		fprintf(stderr, "malloc: memory allocation error!");
+		_puts("malloc: memory allocation error!\n");
 		return (NULL);
 	}
 

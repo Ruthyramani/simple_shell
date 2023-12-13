@@ -1,7 +1,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include "main.h"
+#include "shell.h"
 
 
 /**
@@ -53,19 +53,34 @@ char *file_exist(char *filename, dir_t *listdir)
 dir_t *create_pathdirlist(const char *path)
 {
 	dir_t *head = NULL;
-	dir_t *tmp = NULL;
-	dir_t *current = NULL;
-	size_t i = 1;
 	char **list = NULL;
 	char *pathcpy;
 
 	if (path == NULL)
 		return (NULL);
-	
+
 	pathcpy = malloc(sizeof(*pathcpy) * 2254);
 	if (pathcpy == NULL)
 		return (NULL);
 	list = split(_strcpy(pathcpy, path), ":");
+
+	create_nodes(head, list);
+	free(pathcpy);
+	return (head);
+}
+
+/**
+ * create_nodes - create all the nodes of the linkedlist
+ * @head: first node of the linkedlist
+ * @list: list of directory paths
+ *
+ * Return: The head of the linked list
+*/
+dir_t *create_nodes(dir_t *head, char **list)
+{
+	dir_t *tmp = NULL;
+	dir_t *current = NULL;
+	size_t i = 1;
 
 	tmp = malloc(sizeof(*head));
 	if (tmp == NULL)
@@ -74,12 +89,12 @@ dir_t *create_pathdirlist(const char *path)
 		_puts("malloc: an error has occured\n");
 		exit(2);
 	}
-	tmp->name = list[0];
+	tmp->name = _strdup(list[0]);
 	tmp->next = NULL;
 	head = tmp;
 	current = head;
 
-	while(list[i])
+	while (list[i])
 	{
 		tmp = malloc(sizeof(*tmp));
 		if (tmp == NULL)
@@ -88,14 +103,15 @@ dir_t *create_pathdirlist(const char *path)
 			_puts("malloc: an error has occurred\n");
 			exit(2);
 		}
-		
-		tmp->name = list[i];
+
+		tmp->name = _strdup(list[i]);
 		tmp->next = NULL;
 		current->next = tmp;
 		current = tmp;
 		i++;
 	}
 	free(list);
+
 	return (head);
 }
 

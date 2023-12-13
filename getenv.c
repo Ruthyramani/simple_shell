@@ -1,7 +1,6 @@
 #include "main.h"
+#include "shell.h"
 
-
-extern char **environ;
 
 /**
  * _getenv - returns the value of the given environment variable
