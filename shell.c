@@ -47,9 +47,7 @@ int main(int ac, char **av, char **env)
 		}
 		if (*prompt == '\n')
 			continue;
-		printf("After getline\n");
 		arglist = split(prompt, " \n");
-		printf("After split\n");
 		if (handle_exit(arglist, &status))
 			break;
 
