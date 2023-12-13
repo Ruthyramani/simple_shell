@@ -18,19 +18,24 @@ char **split(char *, const char *);
  */
 int main(int ac, char **av, char **env)
 {
+	__attribute__((unused)) dir_t *curr = NULL;
+	__attribute__((unused)) char *file_path = NULL;
 	int wstatus;
 	char **arglist = NULL;
 	pid_t pid;
 	size_t size = 0;
 	char *prompt = NULL;
 	char stringerr[255];
+	const char *PATH = _getenv("PATH");
 	int status = EXIT_SUCCESS;
 
 	if (ac != 1)
 	{
 		_puts(_strcat(_strcat(stringerr, "Usage: "), av[0]));
+		_putchar('\n');
 		return (EXIT_FAILURE);
 	}
+
 	while (1)
 	{
 		_puts("($) ");
@@ -39,17 +44,18 @@ int main(int ac, char **av, char **env)
 			_putchar('\n');
 			break;
 		}
-		arglist = split(prompt, " \n");
-		if (_strcmp(arglist[0], "exit") == 0)
-		{
-			if [arglist[1])
-				status = 1;
-			break;
-		}
 
-		if (_strcmp(prompt, "env") == 0)
+		arglist = split(prompt, " \n");
+		if (handle_exit(arglist, &status))
+			break;
+
+		if (handle_env(arglist))
+			continue;
+
+		file_path = file_exist(arglist[0], curr = create_pathdirlist(PATH));
+		if (!file_path)
 		{
-			printenv();
+			perror("fify:");
 			continue;
 		}
 
@@ -62,20 +68,22 @@ int main(int ac, char **av, char **env)
 		}
 		else if (pid == 0)
 		{
-			if (execve(arglist[0], arglist, env) == -1)
+			if (execve(file_path, arglist, env) == -1)
 			{
-				perror("Error");
+				perror(av[0]);
 				return (EXIT_FAILURE);
 			}
 		}
 		else
 		{
 			wait(&wstatus);
+			free(file_path);
+			free(arglist);
 		}
 
 	}
 
 	free(prompt);
-
+	/*free(arglist);*/
 	return (status);
 }
