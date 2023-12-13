@@ -3,7 +3,7 @@
 /**
  * _strdup - duplicates a given string
  * @str: string
- * 
+ *
  * Return: Pointer to the duplicate
 */
 char *_strdup(char *str)
@@ -18,7 +18,6 @@ char *_strdup(char *str)
 	dup = malloc(sizeof(*dup) * (_strlen(str) + 1));
 	if (!dup)
 		return (NULL);
-
 	while (str[i])
 	{
 		dup[i] = str[i];

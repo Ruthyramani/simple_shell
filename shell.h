@@ -1,10 +1,16 @@
-#ifndef _MAiN_H_
-#define _MAIN_H_
+#ifndef SHELL_H
+#define SHELL_H
 
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdio.h>
 
+/**
+ * struct dir - structure that represents a directory node in the linkedlist
+ * @name: name of the directory
+ * @next: pointer to the next node of the linkedlist
+ *
+ */
 typedef struct dir
 {
 	char *name;
@@ -32,4 +38,4 @@ void free_list(dir_t *);
 dir_t *create_nodes(dir_t *, char **);
 ssize_t _getline(char **, size_t *, int);
 
-#endif /* MAIN_H */
+#endif /* SHELL_H */

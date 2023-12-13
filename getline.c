@@ -16,7 +16,7 @@ ssize_t readin(char *line, int stream)
 	char c;
 
 	do {
-		if(read(stream, &c, 1))
+		if (read(stream, &c, 1))
 		{
 			line[m++] = c;
 		}
