@@ -7,7 +7,7 @@
 /**
  * file_exist - checks if a file exist in any of the path directories
  * @filename: name of the file to be checked
- * @dirs: list of path directories
+ * @listdir: list of path directories
  * Return: 0 on success, 1 otherwise
  */
 char *file_exist(char *filename, dir_t *listdir)
@@ -18,8 +18,8 @@ char *file_exist(char *filename, dir_t *listdir)
 	struct stat st;
 
 	path = malloc(sizeof(*path) * 4096);
-        if (path == NULL)
-                return (NULL);
+	if (path == NULL)
+		return (NULL);
 	tmp = listdir;
 	while (tmp)
 	{
@@ -63,8 +63,8 @@ dir_t *create_pathdirlist(const char *path)
 		return (NULL);
 	
 	pathcpy = malloc(sizeof(*pathcpy) * 2254);
-        if (pathcpy == NULL)
-                return (NULL);
+	if (pathcpy == NULL)
+		return (NULL);
 	list = split(_strcpy(pathcpy, path), ":");
 
 	tmp = malloc(sizeof(*head));
@@ -89,7 +89,7 @@ dir_t *create_pathdirlist(const char *path)
 			exit(2);
 		}
 		
-		tmp-> name = list[i];
+		tmp->name = list[i];
 		tmp->next = NULL;
 		current->next = tmp;
 		current = tmp;
