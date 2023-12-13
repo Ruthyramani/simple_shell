@@ -25,6 +25,7 @@ int main(int ac, char **av, char **env)
 	size_t size = 4092;
 	char *prompt = NULL;
 	char stringerr[255];
+
 	__attribute__((unused)) const char *PATH = _getenv("PATH");
 	int status = EXIT_SUCCESS;
 
@@ -55,12 +56,14 @@ int main(int ac, char **av, char **env)
 			continue;
 
 
-		/*file_path = file_exist(arglist[0], curr = create_pathdirlist(PATH));
+		/**
+		 * file_path = file_exist(arglist[0], curr = create_pathdirlist(PATH));
 		if (!file_path)
 		{
 			perror("fify:");
 			continue;
-		}*/
+		}
+		*/
 
 		pid = fork();
 

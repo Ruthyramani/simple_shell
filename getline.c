@@ -4,7 +4,7 @@
 
 /**
  * readin - reads input from the terminal
- * @buf: buffer were input is copied
+ * @line: buffer were input is copied
  * @stream: input stream to get input
  *
  * Return: number of characters read
@@ -38,7 +38,7 @@ ssize_t readin(char *line, FILE *stream)
  * memory buffer
  * @n: size of the memory buffer
  * @lineptr: pointer to the memory buffer where the line should be stored
- * @stream: the input file stream from which the line is read
+ * @strm: the input file stream from which the line is read
  *
  * Return: The number of characters read from the stream, returns -1 if
  * error occur

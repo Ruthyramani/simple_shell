@@ -3,7 +3,7 @@
 
 /**
  * is_number - checks if a character is a digit
- * @c: character to be checked
+ * @str: character to be checked
  * Return: 1 if ch is digit, 0 otherwise
  */
 int is_number(char *str)
