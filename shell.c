@@ -92,5 +92,8 @@ int main(int ac, char **av, char **env)
 
 	/*free(prompt);*/
 	/*free(arglist);*/
-	return (status);
+	
+	if (status != 0)
+		return (status);
+	return (WEXITSTATUS(wstatus));
 }
