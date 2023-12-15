@@ -19,7 +19,7 @@ int main(int ac, char **av, char **env)
 {
 	__attribute__((unused)) dir_t *curr = NULL;
 	__attribute__((unused)) char *file_path = NULL;
-	int wstatus;
+	int wstatus = 0;
 	char **arglist = NULL;
 	pid_t pid;
 	size_t size = 4092;
@@ -47,7 +47,8 @@ int main(int ac, char **av, char **env)
 				_putchar('\n');
 			break;
 		}
-		if (*prompt == '\n')
+		prompt = rmspc(prompt);
+		if (*prompt == '\0')
 			continue;
 		arglist = split(prompt, " \n");
 		if (handle_exit(arglist, &status))
@@ -84,16 +85,18 @@ int main(int ac, char **av, char **env)
 		else
 		{
 			wait(&wstatus);
+			if (WIFEXITED(wstatus))
+				wstatus = WEXITSTATUS(wstatus);
 			free(file_path);
 			free(arglist);
 		}
 
 	}
 
-	/*free(prompt);*/
+	free(prompt);
 	/*free(arglist);*/
 	
 	if (status != 0)
 		return (status);
-	return (WEXITSTATUS(wstatus));
+	return (wstatus);
 }

@@ -22,6 +22,7 @@ int _puts(char *);
 int is_number(char *);
 int _isdigit(char);
 int _atoi(char *);
+char *rmspc(char *);
 int _strlen(char *);
 char *_strcat(char *, char *);
 char *_strdup(char *);
