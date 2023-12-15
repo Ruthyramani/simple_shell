@@ -15,13 +15,11 @@ int handle_exit(char **argv, int *pstatus)
 	{
 		if (argv[1] && is_number(argv[1]))
 		{
-			free(argv);
 			*pstatus = _atoi(argv[1]);
 			return (1);
 		}
 		if (argv[1] == NULL)
 		{
-			free(argv);
 			return (1);
 		}
 	}

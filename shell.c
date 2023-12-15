@@ -56,6 +56,7 @@ int main(int ac, char **av, char **env)
 		if (handle_exit(arglist, &status))
 		{
 			free(prompt);
+			free(arglist);
 			break;
 		}
 
