@@ -24,6 +24,7 @@ int main(int ac, char **av, char **env)
 	pid_t pid;
 	size_t size = 4092;
 	char *prompt = NULL;
+	char *trimmed = NULL;
 	char stringerr[255];
 
 	__attribute__((unused)) const char *PATH = _getenv("PATH");
@@ -45,12 +46,13 @@ int main(int ac, char **av, char **env)
 		{
 			if (isatty(STDIN_FILENO))
 				_putchar('\n');
+			free(prompt);
 			break;
 		}
-		prompt = rmspc(prompt);
-		if (*prompt == '\0')
+		trimmed = rmspc(prompt);
+		if (*trimmed == '\n' || *trimmed == '\0')
 			continue;
-		arglist = split(prompt, " \n");
+		arglist = split(trimmed, " \n");
 		if (handle_exit(arglist, &status))
 			break;
 
@@ -87,13 +89,12 @@ int main(int ac, char **av, char **env)
 			wait(&wstatus);
 			if (WIFEXITED(wstatus))
 				wstatus = WEXITSTATUS(wstatus);
-			free(file_path);
+			/*free(file_path);*/
 			free(arglist);
 		}
 
 	}
 
-	free(prompt);
 	/*free(arglist);*/
 	
 	if (status != 0)

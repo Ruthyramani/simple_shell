@@ -22,7 +22,7 @@ ssize_t readin(char *line, int stream)
 		}
 		else
 		{
-			m = -1;
+			m = EOF;
 			break;
 		}
 	} while (c != '\n');
@@ -52,7 +52,7 @@ ssize_t _getline(char **lineptr, __attribute__((unused)) size_t *n, int strm)
 		line = malloc(sizeof(*line) * 4092);
 		if (!line)
 		{
-			return (-1);
+			return (EOF);
 		}
 		return (readin(line, strm));
 	}

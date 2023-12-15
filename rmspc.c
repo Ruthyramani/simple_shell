@@ -7,36 +7,25 @@
  */
 char *rmspc(char *str)
 {
-	char space = ' ';
-	char *ptr;
+	size_t i = 0;
+	const char space = ' ';
 	char *trim = NULL;
 
 	if (!str)
 		return (NULL);
 
-	while (*str)
-	{
-		trim = str;
-		if (*str != space)
-			break;
-		str++;
-	}
+	while (str[i] && str[i] == space)
+		i++;
 
-	while (*str)
+	trim = str + i;
+	i = 0;
+	while (trim[i])
+		++i;
+	while (trim[--i])
 	{
-		ptr = str;
-		str++;
-		if (!*str)
-		{
-			while (*ptr == space || *ptr == '\n')
-			{
-				--ptr;
-				if (*ptr != space && *ptr != '\n')
-				{
-					*++ptr = '\0';
-				}
-			}
-		}
+		trim[i] = '\0';
+		if (trim[i] != space)
+			break;
 	}
 
 	return (trim);
