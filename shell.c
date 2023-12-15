@@ -36,7 +36,7 @@ int main(int ac, char **av, char **env)
 		_putchar('\n');
 		return (EXIT_FAILURE);
 	}
-	prompt = malloc(sizeof(*prompt) * 4092);
+	prompt = malloc(sizeof(*prompt) * 8192);
 
 	while (1)
 	{
