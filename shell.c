@@ -102,7 +102,7 @@ int main(int ac, char **av, char **env)
 	}
 
 	/*free(arglist);*/
-	
+
 	if (status != 0)
 		return (status);
 	return (wstatus);
