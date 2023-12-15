@@ -54,10 +54,15 @@ int main(int ac, char **av, char **env)
 			continue;
 		arglist = split(trimmed, " \n");
 		if (handle_exit(arglist, &status))
+		{
+			free(prompt);
 			break;
+		}
 
 		if (handle_env(arglist))
+		{
 			continue;
+		}
 
 
 		/**
