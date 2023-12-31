@@ -10,37 +10,51 @@
  * @listdir: list of path directories
  * Return: 0 on success, 1 otherwise
  */
-char *file_exist(char *filename, dir_t *listdir)
+char *file_exist(char *filename)
 {
-	dir_t *tmp = NULL;
+	char *tmp;
+	char *abs_path;
+	char *tok;
 	char *path;
-	char *abs_path = NULL;
 	struct stat st;
+
+	if (*filename == '/')
+	{
+		if (stat(filename, &st) == 0)
+			return (filename);
+		return (NULL);
+	}
 
 	path = malloc(sizeof(*path) * 4096);
 	if (path == NULL)
 		return (NULL);
-	tmp = listdir;
-	while (tmp)
+	tmp = malloc(sizeof(*tmp) * 255);
+	if (tmp == NULL)
+		return (NULL);
+
+	path = _strcpy(path, _getenv("PATH"));
+	tok = strtok(path, ":");
+
+	while (tok)
 	{
-		_strcpy(path, tmp->name);
-		if (stat(_strcat(_strcat(path, "/"), filename), &st) == 0)
+		_strcpy(tmp, tok);
+		if (stat(_strcat(_strcat(tmp, "/"), filename), &st) == 0)
 		{
-			abs_path = malloc(sizeof(*abs_path) * (_strlen(path) + 1));
+			abs_path = malloc(sizeof(*abs_path) * (_strlen(tmp) + 1));
 			if (abs_path == NULL)
 			{
 				free(path);
 				return (NULL);
 			}
-			_strcpy(abs_path, path);
+			_strcpy(abs_path, tmp);
 			free(path);
-			free_list(listdir);
+			free(tmp);
 			return (abs_path);
 		}
-		tmp = tmp->next;
+		tok = strtok(NULL, ":");
 	}
 	free(path);
-	free_list(listdir);
+	free(tmp);
 	return (NULL);
 }
 
