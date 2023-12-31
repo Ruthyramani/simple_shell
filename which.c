@@ -18,7 +18,7 @@ char *file_exist(char *filename)
 	char *path;
 	struct stat st;
 
-	if (*filename == '/')
+	if (*filename == '/' || *(filename + 1) == '/')
 	{
 		if (stat(filename, &st) == 0)
 			return (filename);
