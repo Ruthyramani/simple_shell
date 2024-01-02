@@ -4,7 +4,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdio.h>
-#include <string.h>
 
 /**
  * struct dir - structure that represents a directory node in the linkedlist
@@ -24,13 +23,13 @@ int is_number(char *);
 int _isdigit(char);
 int _atoi(char *);
 char *rmspc(char *);
-int _strlen(const char *);
+int _strlen(char *);
 char *_strcat(char *, char *);
 char *_strdup(char *);
 int _strcmp(char *, char *);
 char *_strcpy(char *, const char *);
 dir_t *create_pathdirlist(const char *);
-char *file_exist(char *);
+char *file_exist(char *, dir_t *);
 char **split(char *, const char *);
 void printenv(void);
 char *_getenv(char *);

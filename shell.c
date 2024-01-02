@@ -56,6 +56,7 @@ int main(int ac, char **av, char **env)
 		if (handle_exit(arglist, &status))
 		{
 			free(prompt);
+			free(arglist);
 			break;
 		}
 
@@ -65,12 +66,14 @@ int main(int ac, char **av, char **env)
 		}
 
 
-		file_path = file_exist(arglist[0]);
+		/**
+		 * file_path = file_exist(arglist[0], curr = create_pathdirlist(PATH));
 		if (!file_path)
 		{
 			perror("fify:");
 			continue;
 		}
+		*/
 
 		pid = fork();
 
@@ -81,10 +84,9 @@ int main(int ac, char **av, char **env)
 		}
 		else if (pid == 0)
 		{
-			if (execve(file_path, arglist, env) == -1)
+			if (execve(arglist[0], arglist, env) == -1)
 			{
 				perror(av[0]);
-				free(file_path);
 				return (EXIT_FAILURE);
 			}
 		}
@@ -93,13 +95,12 @@ int main(int ac, char **av, char **env)
 			wait(&wstatus);
 			if (WIFEXITED(wstatus))
 				wstatus = WEXITSTATUS(wstatus);
-			free(file_path);
+			/*free(file_path);*/
 			free(arglist);
 		}
 
 	}
 
-	/*free(file_path);*/
 	/*free(arglist);*/
 
 	if (status != 0)
