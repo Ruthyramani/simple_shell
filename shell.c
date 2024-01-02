@@ -100,6 +100,7 @@ int main(int ac, char **av, char **env)
 	}
 
 	/*free(file_path);*/
+	/*free(arglist);*/
 
 	if (status != 0)
 		return (status);
